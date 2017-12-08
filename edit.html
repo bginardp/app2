@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <th:block th:include="/common/head :: head('Facturaci&oacute;n')" /> -->
+<head>
+    <title>Linea factura 3</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+ </head>
+<body>
+	<!-- <th:block th:include="/common/header :: header" /> -->
+	<div class="container">
+
+		<form th:object="${factura}" th:action="@{/factura/save}"	method="post">
+			<input type="hidden" id="clienteId" name="clienteId" value="*{clienteId}"></input>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Factura</h3>
+							<!-- <div class="row" style="background-color: green;">
+								<div class="col-md-5" style="background-color: white;">
+									<div class="form-group">
+										<label for="cliente" class="col-sm-2 control-label">Cliente</label>
+										<div class="col-sm-10">
+											<input class="form-control" id="cliente"
+												placeholder="escribir las primeras letras" type="text" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3" style="background-color: white;">
+									<div class="form-group">
+										<label for="fecha" class="col-sm-3 control-label">Fecha</label>
+										<div class="col-sm-9">
+											<input class="form-control" id="fecha"
+												placeholder="fecha factura" type="date" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4" style="background-color: white;">
+									<div class="form-group">
+										<label for="forpag" class="col-sm-4 control-label">Forma
+											Pago</label>
+										<div class="col-sm-8">
+											<select class="form-control" th:field="*{forpagId}"
+												th:errorClass="text-danger">
+												<option th:each="forpag : ${formasPago}"
+													th:value="${forpag.id}"
+													th:selected="${factura.forpagId == forpag.id}"
+													th:text="${forpag.dem}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div> row -->
+							<!--<button type="button" class="btn btn-default btn-sm">cambiar</button>-->
+							<div class="row">
+								<div class="col-4">
+									<h5>De: <span><input class="form-control form-control-sm" id="empresa"
+												placeholder="escribir las primeras letras" type="text"/></span></h5>
+									<address id="dadesEmp">
+										<strong>Salpon S.l</strong><br /> Calle La Rambla 3 Bajos<br />
+										07001 Palma<br /> Illes Balears<br />
+									</address>
+								</div>
+								<div class="col-md-4">
+									<h5>Facturado a: <span><input class="form-control form-control-sm" id="cliente"
+												placeholder="escribir las primeras letras" type="text"/></span></h5>
+									<address id="dadesCli">
+										<strong>MULCICINES PORTO PI S.L</strong><br /> Carrer
+										Ciutadella nº 26 A<br /> 07008 Palma<br /> Illes Balears<br />
+									</address>
+								</div>
+								<div class="col-4">
+									<h5>Detalles:<span>
+									<div class="row">
+										<div class="col">
+										  <small class="form-text text-muted">Serie/Factura</small>
+									      <input id="factura" type="text" class="form-control form-control-sm" placeholder="Factura" value="XX/00021" readonly>
+									    </div>
+									    <div class="col">
+								          <small class="form-text text-muted">Fecha factura</small>
+									      <input class="form-control form-control-sm" id="fecha" placeholder="fecha factura" type="date"/>
+									    </div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<small class="form-text text-muted">Forma de pago</small>
+											<select class="form-control form-control-sm" th:field="*{forpagId}"
+												th:errorClass="text-danger">
+												<option th:each="forpag : ${formasPago}"
+													th:value="${forpag.id}"
+													th:selected="${factura.forpagId == forpag.id}"
+													th:text="${forpag.dem}">Tranferencia</option>
+											</select>
+
+										</div>
+									</div>
+									</span></h5>
+								</div>
+							</div> <!-- row -->
+						</div>	<!-- panel heading -->
+						<div class="card-body">
+							<!--  <h3 class="panel-title">Detalle</h3> -->
+						     <table class="table table-sm">
+							      <thead>
+							        <tr class="row">
+							          <th scope="col" class="col-1">Producto</th>
+							          <th scope="col" class="col-4">Descripción</th>
+							          <th scope="col" class="col-1">Cantidad</th>
+							          <th scope="col" class="col-1">Precio</th>
+							          <th scope="col" class="col-2">Tipo impuesto</th>
+							          <th scope="col" class="col-1">Importe</th>
+							          <th scope="col" class="col-2">Acción</th>
+							        </tr>
+							      </thead>
+							      <tbody>
+							        <tr class="row">
+							          <th scope="row" class="col-1">001</th>
+							          <td class="col-4">Doe moe lorem ipsulom dedulos</td>
+							          <td class="col-1">12.00</td>
+							          <td class="col-1">100.00</td>
+							          <td class="col-2">Reducido 7%</td>
+							          <td class="col-1">1200.00</td>
+							          <td class="col-2">
+							            <button class="btn btn-secondary btn-sm">editar</button>
+							            <button class="btn btn-secondary btn-sm">borrar</button>
+							          </td>
+							        </tr>
+							      </tbody>
+							    </table>
+							    <button class="btn btn-primary btn-sm">Añadir</button>
+						</div>
+						<div class="card-footer">
+						    <div class="row justify-content-end">
+						    	<div class="col-md-6">
+								 <table class="table table-sm">
+									<thead>
+										<tr>
+											<th>Subtotal</th>
+											<th>Irpf</th>
+											<th>Iva (21%)</th>
+											<th>Iva (10%)</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1000.00</td>
+											<td><input class="form-control form-control-sm" type="number" id="irpf" placeholder="irpf"/></td>
+											<td>100.00</td>
+											<td>30.00</td>
+											<td>1140.00</td>
+
+										</tr>
+									</tbody>
+								</table>
+								</div>
+						    </div>
+						</div>
+					</div> <!-- card -->
+				</div>	<!-- col -->
+			</div> <!-- row -->
+			<div class="row justify-content-end">
+
+				 <button type="submit" class="btn btn-primary">Guardar</button>
+
+			</div>
+		</form>
+
+	</div>
+	<!-- container -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#cliente").autocomplete(
+					{
+						source : '/ajax/clientes',
+						select : function(event, ui) {
+							var id = ui.item.value;
+							var nom = ui.item.label;
+							// $( "#divAjax" ).html( data.message+" "+data.timestamp );
+							event.preventDefault();
+							$("#clienteId").val(id);
+							$("#cliente").val(nom);
+							$("#dadesCli").html(
+									'<strong>' + ui.item.label + '</strong><br/>'
+											+ ui.item.cif + '<br/>'
+											+ ui.item.direccion + '<br/>'
+											+ ui.item.value);
+						}
+					});
+			$("#concepto").autocomplete(
+					{
+						source : '/ajax/productos',
+						select : function(event, ui) {
+							var id = ui.item.value;
+							var nom = ui.item.label;
+							// $( "#divAjax" ).html( data.message+" "+data.timestamp );
+							event.preventDefault();
+							$("#productoId").val(id);
+							$("#producto").val(nom);
+							/* $("#dadesPro").html(
+									'<strong>' + ui.item.label + '</strong><br/>'
+											+ ui.item.cif + '<br/>'
+											+ ui.item.direccion + '<br/>'
+											+ ui.item.value); */
+						}
+					});
+		});
+	</script>
+
+</body>
+</html>
